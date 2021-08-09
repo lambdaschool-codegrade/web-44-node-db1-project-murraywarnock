@@ -7,11 +7,10 @@ server.use(express.json());
 server.use("/api/accounts", accountRoutes)
 server.get('/', (req, res, next) => {
   res.send(`
-    <h1>Sprint 1 Challenge</h1>
-    <h2>Build a Web API</h2>
-    <h3>Web44, Unit 4, Sprint 1</h3>
+    <h1>SQL/Konex</h1>
+    <h2>Web44, Unit 4, Sprint 2</h2>
     <p>Murray Warnock</p>
-    <p>August 6, 2021</p>
+    <p>August 9, 2021</p>
   `);
   next();
 });
