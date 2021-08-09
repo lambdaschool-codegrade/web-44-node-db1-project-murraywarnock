@@ -5,7 +5,10 @@ const getAll = () => {
 }
 
 const getById = id => {
-  return db('accounts').where({ id: id })
+  const account =  db('accounts').where('id', id);
+  // if (account.length > 0) {
+    return account;
+  // }
 }
 
 const create = account => {

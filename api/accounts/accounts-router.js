@@ -1,6 +1,9 @@
 const express = require('express');
 const Accounts = require('./accounts-model');
-const router = require('express').Router()
+const router = require('express').Router();
+
+const { checkAccountPayload, checkAccountNameUnique, checkAccountId } = require('./accounts-middleware')
+
 
 router.get('/', async (req, res, next) => {
   try {
@@ -8,8 +11,8 @@ router.get('/', async (req, res, next) => {
         res.status(200).json(result)
     } catch (error) {
         next(error)
-    };
-})
+    }
+});
 
 router.get('/:id', async (req, res, next) => {
   console.log(`hitting ${req.method} ${req.baseUrl}`);
