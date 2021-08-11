@@ -11,8 +11,8 @@ const {
 
 router.get('/', async (req, res, next) => {
   try {
-    const result = await Accounts.getAll()
-        res.status(200).json(result)
+    const accounts = await Accounts.getAll()
+        res.status(200).json(accounts)
     } catch (error) {
         next(error)
     }
@@ -20,14 +20,9 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', checkAccountId, async (req, res, next) => {
   const { id } = req.params
-
   try {
       const account = await Accounts.getById(id);
-      if (account.length === 0) {
-        return {  status: "404", message: `account not found.` }
-      } else {
-        return res.status(200).json(account[0]);
-      }
+      return res.status(200).json(account);
   } catch (error) {
       next(error) 
   }

@@ -4,14 +4,8 @@ const getAll = () => {
   return db('accounts');
 }
 
-const getById = async id =>  {
-  const account =  await db('accounts').where('id', id);
-//   if (account.length > 0) {
-//     return account[0];
-//   } else {
-//     return account;
-//   }
-  return account;
+const getById = id =>  {
+  return db('accounts').where('id', id).first();
 }
 
 const getByName = async name => {
