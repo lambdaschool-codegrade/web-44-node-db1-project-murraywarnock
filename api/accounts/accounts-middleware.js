@@ -22,8 +22,8 @@ exports.checkAccountNameUnique = (req, res, next) => {
 }
 
 
-exports.checkAccountId = (req, res, next) => {
-  // const { id } = req.params
+exports.checkAccountId = async (req, res, next) => {
+  const { id } = req.params
   // Accounts.getById(id)
   //   .then(account => {
   //     if (account.length > 0 ) {
@@ -34,6 +34,17 @@ exports.checkAccountId = (req, res, next) => {
   //     }
   //   })
   //   .catch(next)
+  try {
+    const account = await Accounts.getById(id)
+    if (!account) {
+      next({  status: "404", message: `account not found.` })
+    } else {
+      req.account = account;
+      next()
+    }
+  } catch (error) {
+    next(error)
+  }
   console.log('checkAccountId middleware')
   next()
 }
