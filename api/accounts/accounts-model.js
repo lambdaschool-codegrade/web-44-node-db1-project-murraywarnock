@@ -8,12 +8,8 @@ const getById = id =>  {
   return db('accounts').where('id', id).first();
 }
 
-const getByName = async name => {
-  const account =  await db('accounts').where('name', 'like', `'%${name}%'`);
-  if (account.length > 0) {
-    return account[0];
-  }
-  return account;
+const getByName = name => {
+  return db('accounts').where('name', name).first();
 }
 
 const create = (name, budget) => {

@@ -9,7 +9,6 @@ exports.checkAccountPayload = (req, res, next) => {
     error.message = 'name of account must be a string'
   } else if (name.trim().length < 3 || name.trim().length > 100) {
     error.message = 'name of account must be between 3 and 100'
-    next(error)
   } else if (typeof budget !== 'number' || isNaN(budget)) {
     error.message = 'budget of account must be a number'
   } else if (budget < 0 || budget > 1000000) {
@@ -23,19 +22,19 @@ exports.checkAccountPayload = (req, res, next) => {
   }
 }
 
-exports.checkAccountNameUnique = (req, res, next) => {
-//   const { name } = req.params.body
-//   Accounts.getByName(name)
-//       .then(account => {
-//       if (account.length > 0 ) {
-//         next({  status: "404", message: "that name is taken" })
-//       } else {
-//           next()
-//       }
-//   })
-//       .catch(next)
-  console.log('checkAccountNameUnique middleware')  
-  next()
+exports.checkAccountNameUnique = async (req, res, next) => {
+  const { name } = req.body
+  try {
+    const account = await Accounts.getByName(name)
+    if (account) {
+      const error = { status: 400, message: "that name is taken"}
+      next(error)
+    } else {
+      next()
+    }
+  } catch (error) {    
+    next(error)
+  }
 }
 
 
@@ -52,6 +51,5 @@ exports.checkAccountId = async (req, res, next) => {
   } catch (error) {
     next(error)
   }
-  console.log('checkAccountId middleware')
   next()
-}
+};
