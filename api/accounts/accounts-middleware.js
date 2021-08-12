@@ -41,7 +41,7 @@ exports.checkAccountNameUnique = async (req, res, next) => {
 exports.checkAccountId = async (req, res, next) => {
   const { id } = req.params
   try {
-    const account = await Accounts.getById(id)
+    const account =  await Accounts.getById(id)
     if (!account) {
       next({  status: "404", message: `account not found.` })
     } else {

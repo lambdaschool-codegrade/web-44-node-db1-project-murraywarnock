@@ -31,16 +31,12 @@ router.post(
   checkAccountPayload, 
   checkAccountNameUnique, 
   async (req, res, next) => {
-  // console.log(`hitting ${req.method} ${req.baseUrl}`);
-  // try {
-  //   const newAccountId = await Accounts.create(req.body);
-  //   const newAccount = await Accounts.getById(newAccountId);
-  //   res.status(200).json(newAccount[0]);
-  // } catch (error) {
-  //   next(error);
-  // }
   try {
-    res.json('create account')
+    const newAccount = await Accounts.create({ 
+      name:req.body.name.trim(),
+      budget: req.body.budget
+    });
+    res.status(201).json(newAccount)
   } catch (error) {
     next(error)
   }
@@ -49,21 +45,22 @@ router.post(
 router.put(
   '/:id', 
   checkAccountId,
-  checkAccountPayload, 
-  checkAccountNameUnique,
-  (req, res, next) => {
-  // DO YOUR MAGIC
-  try {
-    res.json('update account')
-  } catch (error) {
-    next(error) 
-  }
-});
+  checkAccountPayload,
+  async (req, res, next) => {
+    const updated = await Accounts.updateById(req.params.id, req.body);
+    res.json(updated);
+    try {
+      res.json('update accout');
+    } catch (error) {
+      next(error);
+    }
+  });
 
-router.delete('/:id', checkAccountId, (req, res, next) => {
+router.delete('/:id', checkAccountId, async (req, res, next) => {
   // DO YOUR MAGIC
   try {
-    res.json('delete account')
+    await Accounts.deleteById(req.params.id);
+    res.json(req.account);
   } catch (error) {
     next(error) 
   }
