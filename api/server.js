@@ -16,7 +16,6 @@ server.get('/', (req, res, next) => {
 });
 
 server.use('*', (req, res, next) => {
-    console.log(`hitting ${req.method} ${req.baseUrl}`);
     next({ status: 404, message: 'not found' }); 
 });
 

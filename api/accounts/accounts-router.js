@@ -1,4 +1,3 @@
-const express = require('express');
 const Accounts = require('./accounts-model');
 const router = require('express').Router();
 
@@ -47,17 +46,15 @@ router.put(
   checkAccountId,
   checkAccountPayload,
   async (req, res, next) => {
-    const updated = await Accounts.updateById(req.params.id, req.body);
-    res.json(updated);
     try {
-      res.json('update accout');
+      const updated = await Accounts.updateById(req.params.id, req.body);
+      res.status(200).json(updated);
     } catch (error) {
       next(error);
     }
   });
 
 router.delete('/:id', checkAccountId, async (req, res, next) => {
-  // DO YOUR MAGIC
   try {
     await Accounts.deleteById(req.params.id);
     res.json(req.account);
